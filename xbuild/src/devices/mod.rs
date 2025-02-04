@@ -110,6 +110,17 @@ impl Device {
         }
     }
 
+    pub fn install(&self, env: &BuildEnv, path: &Path) -> Result<()> {
+        match &self.backend {
+            // TODO: stop and set debug?
+            Backend::Adb(adb) => adb.install(&self.id, path)?,
+            // Backend::Host(host) => host.install(path, launch_args),
+            // Backend::Imd(imd) => imd.install(env, &self.id, path, launch_args),
+            _ => {}
+        };
+        Ok(())
+    }
+
     pub fn run(&self, env: &BuildEnv, path: &Path, launch_args: &[String]) -> Result<()> {
         match &self.backend {
             Backend::Adb(adb) => adb.run(

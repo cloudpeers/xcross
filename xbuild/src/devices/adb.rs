@@ -111,7 +111,7 @@ impl Adb {
         Ok(std::str::from_utf8(&output.stdout)?.trim().to_string())
     }
 
-    fn install(&self, device: &str, path: &Path) -> Result<()> {
+    pub fn install(&self, device: &str, path: &Path) -> Result<()> {
         let file_name = path.file_name().unwrap().to_str().unwrap();
         self.push(device, path)?;
         let status = self

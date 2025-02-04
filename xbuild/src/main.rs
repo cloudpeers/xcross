@@ -42,6 +42,11 @@ enum Commands {
         #[clap(flatten)]
         args: BuildArgs,
     },
+    /// Install app on an attached device (without running it)
+    Install {
+        #[clap(flatten)]
+        args: BuildArgs,
+    },
     /// Run app on an attached device
     Run {
         #[clap(flatten)]
@@ -113,6 +118,11 @@ impl Commands {
             Self::Build { args } => {
                 let env = BuildEnv::new(args)?;
                 command::build(&env)?;
+            }
+            Self::Install { args } => {
+                let env = BuildEnv::new(args)?;
+                command::build(&env)?;
+                command::install(&env)?;
             }
             Self::Run { args, launch_args } => {
                 let env = BuildEnv::new(args)?;
